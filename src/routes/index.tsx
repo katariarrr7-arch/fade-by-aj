@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Scissors, MapPin, Phone, Clock, Star, Instagram, Facebook } from "lucide-react";
+import { useState } from "react";
+import { Scissors, MapPin, Phone, Clock, Star, Instagram, Facebook, Calendar, MessageCircle, Check } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
 import cut1 from "@/assets/cut1.jpg";
 import cut2 from "@/assets/cut2.jpg";
@@ -45,9 +46,9 @@ function Home() {
             <a href="#services" className="hover:text-gold transition">Services</a>
             <a href="#work" className="hover:text-gold transition">Work</a>
             <a href="#reviews" className="hover:text-gold transition">Reviews</a>
-            <a href="#visit" className="hover:text-gold transition">Visit</a>
+            <a href="#book" className="hover:text-gold transition">Book</a>
           </nav>
-          <a href="tel:+855988000895" className="bg-gold-gradient text-primary-foreground px-5 py-2.5 text-sm font-semibold tracking-wider uppercase rounded-sm hover:opacity-90 transition shadow-gold">
+          <a href="#book" className="bg-gold-gradient text-primary-foreground px-5 py-2.5 text-sm font-semibold tracking-wider uppercase rounded-sm hover:opacity-90 transition shadow-gold">
             Book Now
           </a>
         </div>
@@ -73,7 +74,7 @@ function Home() {
               Phnom Penh's most obsessed-over fades. Sit in our chair — walk out looking like the best version of yourself.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="tel:+855988000895" className="bg-gold-gradient text-primary-foreground px-8 py-4 text-sm font-bold tracking-widest uppercase rounded-sm hover:opacity-90 transition shadow-gold">
+              <a href="#book" className="bg-gold-gradient text-primary-foreground px-8 py-4 text-sm font-bold tracking-widest uppercase rounded-sm hover:opacity-90 transition shadow-gold">
                 Book Your Chair
               </a>
               <a href="#services" className="border border-gold/40 text-gold px-8 py-4 text-sm font-bold tracking-widest uppercase rounded-sm hover:bg-gold/10 transition">
@@ -209,38 +210,40 @@ function Home() {
         </div>
       </section>
 
-      {/* VISIT / CTA */}
-      <section id="visit" className="py-32 px-6 relative overflow-hidden">
+      {/* BOOK */}
+      <section id="book" className="py-32 px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-gold-gradient opacity-5" />
-        <div className="max-w-5xl mx-auto text-center relative">
-          <span className="text-gold text-xs uppercase tracking-[0.3em]">— Come Through</span>
-          <h2 className="font-display text-6xl md:text-8xl mt-6 mb-8">Ready for the <span className="italic font-serif font-light text-gold">best cut</span> of your life?</h2>
-          <p className="text-muted-foreground text-lg mb-12 max-w-xl mx-auto">Walk in or call ahead. Either way, you'll leave sharper than you came.</p>
-
-          <div className="grid md:grid-cols-3 gap-6 mb-12 text-left">
-            <div className="border border-border p-6 hover:border-gold/40 transition">
-              <MapPin className="h-6 w-6 text-gold mb-4" />
-              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Find Us</p>
-              <p className="font-semibold">GWQ8+GJX, St 456</p>
-              <p className="text-muted-foreground text-sm">Phnom Penh, Cambodia</p>
-            </div>
-            <div className="border border-border p-6 hover:border-gold/40 transition">
-              <Phone className="h-6 w-6 text-gold mb-4" />
-              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Call the Chair</p>
-              <a href="tel:+855988000895" className="font-semibold hover:text-gold">098 800 895</a>
-              <p className="text-muted-foreground text-sm">Walk-ins welcome</p>
-            </div>
-            <div className="border border-border p-6 hover:border-gold/40 transition">
-              <Clock className="h-6 w-6 text-gold mb-4" />
-              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Open Today</p>
-              <p className="font-semibold">Until 7:00 PM</p>
-              <p className="text-muted-foreground text-sm">7 days a week</p>
-            </div>
+        <div className="max-w-6xl mx-auto relative">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="text-gold text-xs uppercase tracking-[0.3em]">— Book Online</span>
+            <h2 className="font-display text-5xl md:text-7xl mt-6 mb-6">Reserve <span className="italic font-serif font-light text-gold">your chair.</span></h2>
+            <p className="text-muted-foreground text-lg">Fill in the details below and we'll confirm your slot straight to WhatsApp. Takes 30 seconds.</p>
           </div>
 
-          <a href="tel:+855988000895" className="inline-block bg-gold-gradient text-primary-foreground px-12 py-5 text-sm font-bold tracking-widest uppercase rounded-sm hover:opacity-90 transition shadow-gold">
-            Book Your Chair Now
-          </a>
+          <div className="grid lg:grid-cols-5 gap-8 items-start">
+            <BookingForm />
+
+            <div className="lg:col-span-2 space-y-4">
+              <div className="border border-border p-6 hover:border-gold/40 transition bg-card">
+                <MapPin className="h-6 w-6 text-gold mb-3" />
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Find Us</p>
+                <p className="font-semibold">GWQ8+GJX, St 456</p>
+                <p className="text-muted-foreground text-sm">Phnom Penh, Cambodia</p>
+              </div>
+              <div className="border border-border p-6 hover:border-gold/40 transition bg-card">
+                <Phone className="h-6 w-6 text-gold mb-3" />
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Prefer to Call?</p>
+                <a href="tel:+85598800895" className="font-semibold hover:text-gold text-lg">098 800 895</a>
+                <p className="text-muted-foreground text-sm">Walk-ins welcome too</p>
+              </div>
+              <div className="border border-border p-6 hover:border-gold/40 transition bg-card">
+                <Clock className="h-6 w-6 text-gold mb-3" />
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Hours</p>
+                <p className="font-semibold">Open until 7:00 PM</p>
+                <p className="text-muted-foreground text-sm">7 days a week</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -266,5 +269,110 @@ function Home() {
         }
       `}</style>
     </div>
+  );
+}
+
+const WHATSAPP_NUMBER = "85598800895"; // +855 98 800 895 (leading 0 dropped)
+const SERVICE_OPTIONS = ["Signature Fade — $8", "Scissor Cut — $10", "Beard Sculpt — $6", "The Full Ritual — $18"];
+const TIME_SLOTS = ["9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"];
+
+function BookingForm() {
+  const today = new Date().toISOString().split("T")[0];
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    service: SERVICE_OPTIONS[0],
+    date: today,
+    time: "10:00 AM",
+    notes: "",
+  });
+  const [sent, setSent] = useState(false);
+
+  const buildMessage = () => {
+    const lines = [
+      "*New Booking — Fade by AJ*",
+      "",
+      `Name: ${form.name}`,
+      `Phone: ${form.phone}`,
+      `Service: ${form.service}`,
+      `Date: ${form.date}`,
+      `Time: ${form.time}`,
+    ];
+    if (form.notes.trim()) lines.push(`Notes: ${form.notes}`);
+    return encodeURIComponent(lines.join("\n"));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name || !form.phone) return;
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${buildMessage()}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+    setSent(true);
+  };
+
+  const smsUrl = `sms:+${WHATSAPP_NUMBER}?body=${buildMessage()}`;
+
+  const input = "w-full bg-background border border-border px-4 py-3 text-foreground focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold transition rounded-sm";
+  const label = "block text-xs uppercase tracking-widest text-muted-foreground mb-2";
+
+  return (
+    <form onSubmit={handleSubmit} className="lg:col-span-3 border border-border bg-card p-8 md:p-10 space-y-5">
+      <div className="grid md:grid-cols-2 gap-5">
+        <div>
+          <label className={label}>Your Name</label>
+          <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={input} placeholder="John Doe" />
+        </div>
+        <div>
+          <label className={label}>Phone Number</label>
+          <input required type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={input} placeholder="+855 12 345 678" />
+        </div>
+      </div>
+
+      <div>
+        <label className={label}>Service</label>
+        <select value={form.service} onChange={(e) => setForm({ ...form, service: e.target.value })} className={input}>
+          {SERVICE_OPTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
+        </select>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-5">
+        <div>
+          <label className={label}>Preferred Date</label>
+          <input type="date" min={today} value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className={input} />
+        </div>
+        <div>
+          <label className={label}>Preferred Time</label>
+          <select value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} className={input}>
+            {TIME_SLOTS.map((t) => <option key={t} value={t}>{t}</option>)}
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label className={label}>Notes <span className="normal-case tracking-normal text-muted-foreground/60">(optional)</span></label>
+        <textarea rows={3} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} className={input} placeholder="Anything your barber should know — style references, allergies, etc." />
+      </div>
+
+      <div className="pt-2 space-y-3">
+        <button type="submit" className="w-full bg-gold-gradient text-primary-foreground py-4 text-sm font-bold tracking-widest uppercase rounded-sm hover:opacity-90 transition shadow-gold flex items-center justify-center gap-3">
+          <MessageCircle className="h-5 w-5" />
+          Book via WhatsApp
+        </button>
+        <div className="grid grid-cols-2 gap-3">
+          <a href={smsUrl} className="border border-gold/40 text-gold py-3 text-xs font-bold tracking-widest uppercase rounded-sm hover:bg-gold/10 transition flex items-center justify-center gap-2">
+            <Calendar className="h-4 w-4" /> Send SMS
+          </a>
+          <a href="tel:+85598800895" className="border border-gold/40 text-gold py-3 text-xs font-bold tracking-widest uppercase rounded-sm hover:bg-gold/10 transition flex items-center justify-center gap-2">
+            <Phone className="h-4 w-4" /> Call Instead
+          </a>
+        </div>
+        {sent && (
+          <div className="flex items-center gap-2 text-sm text-gold pt-2">
+            <Check className="h-4 w-4" /> Request sent — we'll confirm your slot on WhatsApp shortly.
+          </div>
+        )}
+        <p className="text-xs text-muted-foreground/70 text-center pt-2">Your booking opens WhatsApp with all details filled in. Just hit send.</p>
+      </div>
+    </form>
   );
 }
