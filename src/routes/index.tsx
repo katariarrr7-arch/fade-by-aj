@@ -46,9 +46,9 @@ function Home() {
             <a href="#services" className="hover:text-gold transition">Services</a>
             <a href="#work" className="hover:text-gold transition">Work</a>
             <a href="#reviews" className="hover:text-gold transition">Reviews</a>
-            <a href="#visit" className="hover:text-gold transition">Visit</a>
+            <a href="#book" className="hover:text-gold transition">Book</a>
           </nav>
-          <a href="tel:+855988000895" className="bg-gold-gradient text-primary-foreground px-5 py-2.5 text-sm font-semibold tracking-wider uppercase rounded-sm hover:opacity-90 transition shadow-gold">
+          <a href="#book" className="bg-gold-gradient text-primary-foreground px-5 py-2.5 text-sm font-semibold tracking-wider uppercase rounded-sm hover:opacity-90 transition shadow-gold">
             Book Now
           </a>
         </div>
@@ -74,7 +74,7 @@ function Home() {
               Phnom Penh's most obsessed-over fades. Sit in our chair — walk out looking like the best version of yourself.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="tel:+855988000895" className="bg-gold-gradient text-primary-foreground px-8 py-4 text-sm font-bold tracking-widest uppercase rounded-sm hover:opacity-90 transition shadow-gold">
+              <a href="#book" className="bg-gold-gradient text-primary-foreground px-8 py-4 text-sm font-bold tracking-widest uppercase rounded-sm hover:opacity-90 transition shadow-gold">
                 Book Your Chair
               </a>
               <a href="#services" className="border border-gold/40 text-gold px-8 py-4 text-sm font-bold tracking-widest uppercase rounded-sm hover:bg-gold/10 transition">
