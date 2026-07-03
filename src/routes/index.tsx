@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Scissors, MapPin, Phone, Clock, Star, Instagram, Facebook } from "lucide-react";
+import { useState } from "react";
+import { Scissors, MapPin, Phone, Clock, Star, Instagram, Facebook, Calendar, MessageCircle, Check } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
 import cut1 from "@/assets/cut1.jpg";
 import cut2 from "@/assets/cut2.jpg";
