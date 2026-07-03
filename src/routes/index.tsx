@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Scissors, MapPin, Phone, Clock, Star, Instagram, Facebook, Calendar, MessageCircle, Check } from "lucide-react";
+import { Scissors, MapPin, Phone, Clock, Star, Instagram, Facebook, Calendar, MessageCircle } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
 import cut1 from "@/assets/cut1.jpg";
 import cut2 from "@/assets/cut2.jpg";
@@ -215,9 +215,9 @@ function Home() {
         <div className="absolute inset-0 bg-gold-gradient opacity-5" />
         <div className="max-w-6xl mx-auto relative">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-gold text-xs uppercase tracking-[0.3em]">— Book Online</span>
+            <span className="text-gold text-xs uppercase tracking-[0.3em]">— Book Now</span>
             <h2 className="font-display text-5xl md:text-7xl mt-6 mb-6">Reserve <span className="italic font-serif font-light text-gold">your chair.</span></h2>
-            <p className="text-muted-foreground text-lg">Fill in the details below and we'll confirm your slot straight to WhatsApp. Takes 30 seconds.</p>
+            <p className="text-muted-foreground text-lg">Tap to call and lock in your slot instantly, or send your details ahead via WhatsApp or SMS.</p>
           </div>
 
           <div className="grid lg:grid-cols-5 gap-8 items-start">
@@ -232,9 +232,9 @@ function Home() {
               </div>
               <div className="border border-border p-6 hover:border-gold/40 transition bg-card">
                 <Phone className="h-6 w-6 text-gold mb-3" />
-                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Prefer to Call?</p>
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Book by Phone</p>
                 <a href="tel:+85598800895" className="font-semibold hover:text-gold text-lg">098 800 895</a>
-                <p className="text-muted-foreground text-sm">Walk-ins welcome too</p>
+                <p className="text-muted-foreground text-sm">Call now — walk-ins welcome too</p>
               </div>
               <div className="border border-border p-6 hover:border-gold/40 transition bg-card">
                 <Clock className="h-6 w-6 text-gold mb-3" />
@@ -286,7 +286,6 @@ function BookingForm() {
     time: "10:00 AM",
     notes: "",
   });
-  const [sent, setSent] = useState(false);
 
   const buildMessage = () => {
     const lines = [
@@ -302,21 +301,14 @@ function BookingForm() {
     return encodeURIComponent(lines.join("\n"));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!form.name || !form.phone) return;
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${buildMessage()}`;
-    window.open(url, "_blank", "noopener,noreferrer");
-    setSent(true);
-  };
-
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${buildMessage()}`;
   const smsUrl = `sms:+${WHATSAPP_NUMBER}?body=${buildMessage()}`;
 
   const input = "w-full bg-background border border-border px-4 py-3 text-foreground focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold transition rounded-sm";
   const label = "block text-xs uppercase tracking-widest text-muted-foreground mb-2";
 
   return (
-    <form onSubmit={handleSubmit} className="lg:col-span-3 border border-border bg-card p-8 md:p-10 space-y-5">
+    <form onSubmit={(e) => e.preventDefault()} className="lg:col-span-3 border border-border bg-card p-8 md:p-10 space-y-5">
       <div className="grid md:grid-cols-2 gap-5">
         <div>
           <label className={label}>Your Name</label>
@@ -354,24 +346,19 @@ function BookingForm() {
       </div>
 
       <div className="pt-2 space-y-3">
-        <button type="submit" className="w-full bg-gold-gradient text-primary-foreground py-4 text-sm font-bold tracking-widest uppercase rounded-sm hover:opacity-90 transition shadow-gold flex items-center justify-center gap-3">
-          <MessageCircle className="h-5 w-5" />
-          Book via WhatsApp
-        </button>
+        <a href="tel:+85598800895" className="w-full bg-gold-gradient text-primary-foreground py-4 text-sm font-bold tracking-widest uppercase rounded-sm hover:opacity-90 transition shadow-gold flex items-center justify-center gap-3">
+          <Phone className="h-5 w-5" />
+          Call to Book
+        </a>
         <div className="grid grid-cols-2 gap-3">
+          <a href={whatsappUrl} className="border border-gold/40 text-gold py-3 text-xs font-bold tracking-widest uppercase rounded-sm hover:bg-gold/10 transition flex items-center justify-center gap-2">
+            <MessageCircle className="h-4 w-4" /> WhatsApp
+          </a>
           <a href={smsUrl} className="border border-gold/40 text-gold py-3 text-xs font-bold tracking-widest uppercase rounded-sm hover:bg-gold/10 transition flex items-center justify-center gap-2">
             <Calendar className="h-4 w-4" /> Send SMS
           </a>
-          <a href="tel:+85598800895" className="border border-gold/40 text-gold py-3 text-xs font-bold tracking-widest uppercase rounded-sm hover:bg-gold/10 transition flex items-center justify-center gap-2">
-            <Phone className="h-4 w-4" /> Call Instead
-          </a>
         </div>
-        {sent && (
-          <div className="flex items-center gap-2 text-sm text-gold pt-2">
-            <Check className="h-4 w-4" /> Request sent — we'll confirm your slot on WhatsApp shortly.
-          </div>
-        )}
-        <p className="text-xs text-muted-foreground/70 text-center pt-2">Your booking opens WhatsApp with all details filled in. Just hit send.</p>
+        <p className="text-xs text-muted-foreground/70 text-center pt-2">Fill in your details, then tap WhatsApp or SMS to send them. Or just call us directly.</p>
       </div>
     </form>
   );
