@@ -210,38 +210,40 @@ function Home() {
         </div>
       </section>
 
-      {/* VISIT / CTA */}
-      <section id="visit" className="py-32 px-6 relative overflow-hidden">
+      {/* BOOK */}
+      <section id="book" className="py-32 px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-gold-gradient opacity-5" />
-        <div className="max-w-5xl mx-auto text-center relative">
-          <span className="text-gold text-xs uppercase tracking-[0.3em]">— Come Through</span>
-          <h2 className="font-display text-6xl md:text-8xl mt-6 mb-8">Ready for the <span className="italic font-serif font-light text-gold">best cut</span> of your life?</h2>
-          <p className="text-muted-foreground text-lg mb-12 max-w-xl mx-auto">Walk in or call ahead. Either way, you'll leave sharper than you came.</p>
-
-          <div className="grid md:grid-cols-3 gap-6 mb-12 text-left">
-            <div className="border border-border p-6 hover:border-gold/40 transition">
-              <MapPin className="h-6 w-6 text-gold mb-4" />
-              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Find Us</p>
-              <p className="font-semibold">GWQ8+GJX, St 456</p>
-              <p className="text-muted-foreground text-sm">Phnom Penh, Cambodia</p>
-            </div>
-            <div className="border border-border p-6 hover:border-gold/40 transition">
-              <Phone className="h-6 w-6 text-gold mb-4" />
-              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Call the Chair</p>
-              <a href="tel:+855988000895" className="font-semibold hover:text-gold">098 800 895</a>
-              <p className="text-muted-foreground text-sm">Walk-ins welcome</p>
-            </div>
-            <div className="border border-border p-6 hover:border-gold/40 transition">
-              <Clock className="h-6 w-6 text-gold mb-4" />
-              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Open Today</p>
-              <p className="font-semibold">Until 7:00 PM</p>
-              <p className="text-muted-foreground text-sm">7 days a week</p>
-            </div>
+        <div className="max-w-6xl mx-auto relative">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="text-gold text-xs uppercase tracking-[0.3em]">— Book Online</span>
+            <h2 className="font-display text-5xl md:text-7xl mt-6 mb-6">Reserve <span className="italic font-serif font-light text-gold">your chair.</span></h2>
+            <p className="text-muted-foreground text-lg">Fill in the details below and we'll confirm your slot straight to WhatsApp. Takes 30 seconds.</p>
           </div>
 
-          <a href="tel:+855988000895" className="inline-block bg-gold-gradient text-primary-foreground px-12 py-5 text-sm font-bold tracking-widest uppercase rounded-sm hover:opacity-90 transition shadow-gold">
-            Book Your Chair Now
-          </a>
+          <div className="grid lg:grid-cols-5 gap-8 items-start">
+            <BookingForm />
+
+            <div className="lg:col-span-2 space-y-4">
+              <div className="border border-border p-6 hover:border-gold/40 transition bg-card">
+                <MapPin className="h-6 w-6 text-gold mb-3" />
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Find Us</p>
+                <p className="font-semibold">GWQ8+GJX, St 456</p>
+                <p className="text-muted-foreground text-sm">Phnom Penh, Cambodia</p>
+              </div>
+              <div className="border border-border p-6 hover:border-gold/40 transition bg-card">
+                <Phone className="h-6 w-6 text-gold mb-3" />
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Prefer to Call?</p>
+                <a href="tel:+85598800895" className="font-semibold hover:text-gold text-lg">098 800 895</a>
+                <p className="text-muted-foreground text-sm">Walk-ins welcome too</p>
+              </div>
+              <div className="border border-border p-6 hover:border-gold/40 transition bg-card">
+                <Clock className="h-6 w-6 text-gold mb-3" />
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Hours</p>
+                <p className="font-semibold">Open until 7:00 PM</p>
+                <p className="text-muted-foreground text-sm">7 days a week</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
