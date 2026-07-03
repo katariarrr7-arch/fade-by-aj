@@ -271,3 +271,108 @@ function Home() {
     </div>
   );
 }
+
+const WHATSAPP_NUMBER = "85598800895"; // +855 98 800 895 (leading 0 dropped)
+const SERVICE_OPTIONS = ["Signature Fade — $8", "Scissor Cut — $10", "Beard Sculpt — $6", "The Full Ritual — $18"];
+const TIME_SLOTS = ["9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"];
+
+function BookingForm() {
+  const today = new Date().toISOString().split("T")[0];
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    service: SERVICE_OPTIONS[0],
+    date: today,
+    time: "10:00 AM",
+    notes: "",
+  });
+  const [sent, setSent] = useState(false);
+
+  const buildMessage = () => {
+    const lines = [
+      "*New Booking — Fade by AJ*",
+      "",
+      `Name: ${form.name}`,
+      `Phone: ${form.phone}`,
+      `Service: ${form.service}`,
+      `Date: ${form.date}`,
+      `Time: ${form.time}`,
+    ];
+    if (form.notes.trim()) lines.push(`Notes: ${form.notes}`);
+    return encodeURIComponent(lines.join("\n"));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name || !form.phone) return;
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${buildMessage()}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+    setSent(true);
+  };
+
+  const smsUrl = `sms:+${WHATSAPP_NUMBER}?body=${buildMessage()}`;
+
+  const input = "w-full bg-background border border-border px-4 py-3 text-foreground focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold transition rounded-sm";
+  const label = "block text-xs uppercase tracking-widest text-muted-foreground mb-2";
+
+  return (
+    <form onSubmit={handleSubmit} className="lg:col-span-3 border border-border bg-card p-8 md:p-10 space-y-5">
+      <div className="grid md:grid-cols-2 gap-5">
+        <div>
+          <label className={label}>Your Name</label>
+          <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={input} placeholder="John Doe" />
+        </div>
+        <div>
+          <label className={label}>Phone Number</label>
+          <input required type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={input} placeholder="+855 12 345 678" />
+        </div>
+      </div>
+
+      <div>
+        <label className={label}>Service</label>
+        <select value={form.service} onChange={(e) => setForm({ ...form, service: e.target.value })} className={input}>
+          {SERVICE_OPTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
+        </select>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-5">
+        <div>
+          <label className={label}>Preferred Date</label>
+          <input type="date" min={today} value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className={input} />
+        </div>
+        <div>
+          <label className={label}>Preferred Time</label>
+          <select value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} className={input}>
+            {TIME_SLOTS.map((t) => <option key={t} value={t}>{t}</option>)}
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label className={label}>Notes <span className="normal-case tracking-normal text-muted-foreground/60">(optional)</span></label>
+        <textarea rows={3} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} className={input} placeholder="Anything your barber should know — style references, allergies, etc." />
+      </div>
+
+      <div className="pt-2 space-y-3">
+        <button type="submit" className="w-full bg-gold-gradient text-primary-foreground py-4 text-sm font-bold tracking-widest uppercase rounded-sm hover:opacity-90 transition shadow-gold flex items-center justify-center gap-3">
+          <MessageCircle className="h-5 w-5" />
+          Book via WhatsApp
+        </button>
+        <div className="grid grid-cols-2 gap-3">
+          <a href={smsUrl} className="border border-gold/40 text-gold py-3 text-xs font-bold tracking-widest uppercase rounded-sm hover:bg-gold/10 transition flex items-center justify-center gap-2">
+            <Calendar className="h-4 w-4" /> Send SMS
+          </a>
+          <a href="tel:+85598800895" className="border border-gold/40 text-gold py-3 text-xs font-bold tracking-widest uppercase rounded-sm hover:bg-gold/10 transition flex items-center justify-center gap-2">
+            <Phone className="h-4 w-4" /> Call Instead
+          </a>
+        </div>
+        {sent && (
+          <div className="flex items-center gap-2 text-sm text-gold pt-2">
+            <Check className="h-4 w-4" /> Request sent — we'll confirm your slot on WhatsApp shortly.
+          </div>
+        )}
+        <p className="text-xs text-muted-foreground/70 text-center pt-2">Your booking opens WhatsApp with all details filled in. Just hit send.</p>
+      </div>
+    </form>
+  );
+}
